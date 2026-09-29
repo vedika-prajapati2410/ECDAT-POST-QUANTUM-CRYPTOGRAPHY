@@ -1,0 +1,15 @@
+flask>=3.0
+reportlab>=4.0        # PDF report generation
+cryptography>=42.0    # report tamper-evident signing (Ed25519 today; see app/report_signing.py for the ML-DSA upgrade path)
+pyyaml>=6.0           # CI/CD gate YAML template generation
+
+# If you'd rather run this on FastAPI, the app/*.py logic modules
+# (classification.py, risk_engine.py, recommendations.py, agility_score.py,
+# migration_roadmap.py, harvest_now.py, dependency_graph.py, aggregation.py,
+# regulatory_mapping.py, cve_lookup.py, certificate_analysis.py,
+# cyclonedx_export.py, trend_analysis.py, simulator.py, triage.py,
+# ci_cd_template.py, report_signing.py, pipeline.py) have zero Flask
+# dependency -- only app/api.py needs porting to FastAPI routes.
+
+# Optional, NOT required to run this codebase today (see report_signing.py):
+# liboqs-python   # only needed if/when you swap Ed25519 for real ML-DSA signing

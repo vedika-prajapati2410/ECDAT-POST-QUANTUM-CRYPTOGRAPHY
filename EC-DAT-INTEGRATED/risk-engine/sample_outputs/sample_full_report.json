@@ -1,0 +1,1344 @@
+{
+  "scan_id": "a1c27bb3",
+  "created_at": "2026-09-26T17:46:38.294287+00:00",
+  "years_to_crqc_assumption": 12,
+  "artefact_count": 14,
+  "risk_tier_counts": {
+    "Critical": 5,
+    "Safe": 3,
+    "Low": 3,
+    "Medium": 3
+  },
+  "deduplication_stats": {
+    "raw_finding_count": 16,
+    "deduplicated_artefact_count": 14,
+    "total_occurrences_merged": 16
+  },
+  "low_confidence_findings_count": 1,
+  "cbom": [
+    {
+      "id": "art-001",
+      "name": "api-gateway-tls-cert",
+      "type": "certificate",
+      "algorithm": "RSA-2048",
+      "location": "services/api-gateway/tls/cert.pem",
+      "key_length": 2048,
+      "internet_facing": true,
+      "data_classification": "PII",
+      "data_volume_gb": 120.0,
+      "used_by": [
+        "mobile-app",
+        "partner-api",
+        "web-frontend"
+      ],
+      "first_seen": "2021-03-01",
+      "locations": [
+        "services/api-gateway/tls/cert.pem"
+      ],
+      "occurrence_count": 1,
+      "confidence": "high",
+      "library_name": null,
+      "library_version": null,
+      "issuer": null,
+      "expiry_date": null,
+      "self_signed": null,
+      "signature_algorithm": null
+    },
+    {
+      "id": "art-002",
+      "name": "auth-service-jwt-signing-key",
+      "type": "key",
+      "algorithm": "ECDSA-P256",
+      "location": "services/auth/keys/jwt_signing.pem",
+      "key_length": 256,
+      "internet_facing": true,
+      "data_classification": "PII",
+      "data_volume_gb": 5.0,
+      "used_by": [
+        "mobile-app",
+        "web-frontend",
+        "partner-api",
+        "internal-admin"
+      ],
+      "first_seen": "2020-11-12",
+      "locations": [
+        "services/auth/keys/jwt_signing.pem"
+      ],
+      "occurrence_count": 1,
+      "confidence": "high",
+      "library_name": null,
+      "library_version": null,
+      "issuer": null,
+      "expiry_date": null,
+      "self_signed": null,
+      "signature_algorithm": null
+    },
+    {
+      "id": "art-003",
+      "name": "payments-db-encryption",
+      "type": "algorithm",
+      "algorithm": "AES-256-GCM",
+      "location": "services/payments/db/encryption.py",
+      "key_length": 256,
+      "internet_facing": false,
+      "data_classification": "financial",
+      "data_volume_gb": 850.0,
+      "used_by": [
+        "billing-service",
+        "reporting-service"
+      ],
+      "first_seen": "2019-06-20",
+      "locations": [
+        "services/payments/db/encryption.py"
+      ],
+      "occurrence_count": 1,
+      "confidence": "high",
+      "library_name": null,
+      "library_version": null,
+      "issuer": null,
+      "expiry_date": null,
+      "self_signed": null,
+      "signature_algorithm": null
+    },
+    {
+      "id": "art-004",
+      "name": "legacy-file-transfer-cipher",
+      "type": "algorithm",
+      "algorithm": "3DES",
+      "location": "services/legacy-ftp/cipher.c",
+      "key_length": 168,
+      "internet_facing": false,
+      "data_classification": "internal",
+      "data_volume_gb": 40.0,
+      "used_by": [
+        "batch-processor"
+      ],
+      "first_seen": "2015-01-10",
+      "locations": [
+        "services/legacy-ftp/cipher.c"
+      ],
+      "occurrence_count": 1,
+      "confidence": "high",
+      "library_name": null,
+      "library_version": null,
+      "issuer": null,
+      "expiry_date": null,
+      "self_signed": null,
+      "signature_algorithm": null
+    },
+    {
+      "id": "art-005",
+      "name": "openssl-libcrypto",
+      "type": "library",
+      "algorithm": "RSA-4096",
+      "location": "vendor/openssl/1.1.1",
+      "key_length": 4096,
+      "internet_facing": true,
+      "data_classification": "financial",
+      "data_volume_gb": 300.0,
+      "used_by": [
+        "payments-service",
+        "auth-service",
+        "api-gateway",
+        "partner-api"
+      ],
+      "first_seen": "2018-08-04",
+      "locations": [
+        "vendor/openssl/1.1.1"
+      ],
+      "occurrence_count": 1,
+      "confidence": "high",
+      "library_name": "openssl",
+      "library_version": "1.1.0",
+      "issuer": null,
+      "expiry_date": null,
+      "self_signed": null,
+      "signature_algorithm": null
+    },
+    {
+      "id": "art-006",
+      "name": "session-key-exchange",
+      "type": "protocol",
+      "algorithm": "ECDH-P384",
+      "location": "services/session/handshake.go",
+      "key_length": 384,
+      "internet_facing": true,
+      "data_classification": "PII",
+      "data_volume_gb": 60.0,
+      "used_by": [
+        "mobile-app",
+        "web-frontend"
+      ],
+      "first_seen": "2022-02-18",
+      "locations": [
+        "services/session/handshake.go"
+      ],
+      "occurrence_count": 1,
+      "confidence": "high",
+      "library_name": null,
+      "library_version": null,
+      "issuer": null,
+      "expiry_date": null,
+      "self_signed": null,
+      "signature_algorithm": null
+    },
+    {
+      "id": "art-007",
+      "name": "internal-log-signing-key",
+      "type": "key",
+      "algorithm": "DSA-2048",
+      "location": "services/audit/log_signer.py",
+      "key_length": 2048,
+      "internet_facing": false,
+      "data_classification": "internal",
+      "data_volume_gb": 15.0,
+      "used_by": [
+        "audit-service"
+      ],
+      "first_seen": "2017-09-01",
+      "locations": [
+        "services/audit/log_signer.py"
+      ],
+      "occurrence_count": 1,
+      "confidence": "high",
+      "library_name": null,
+      "library_version": null,
+      "issuer": null,
+      "expiry_date": null,
+      "self_signed": null,
+      "signature_algorithm": null
+    },
+    {
+      "id": "art-008",
+      "name": "next-gen-vpn-handshake",
+      "type": "protocol",
+      "algorithm": "ML-KEM-768",
+      "location": "services/vpn/handshake_pqc.rs",
+      "key_length": 768,
+      "internet_facing": true,
+      "data_classification": "financial",
+      "data_volume_gb": 25.0,
+      "used_by": [
+        "remote-access-gateway"
+      ],
+      "first_seen": "2025-09-01",
+      "locations": [
+        "services/vpn/handshake_pqc.rs"
+      ],
+      "occurrence_count": 1,
+      "confidence": "high",
+      "library_name": null,
+      "library_version": null,
+      "issuer": null,
+      "expiry_date": null,
+      "self_signed": null,
+      "signature_algorithm": null
+    },
+    {
+      "id": "art-009",
+      "name": "config-secrets-cipher",
+      "type": "algorithm",
+      "algorithm": "AES-128-CBC",
+      "location": "infra/config/secrets.yaml.enc",
+      "key_length": 128,
+      "internet_facing": false,
+      "data_classification": "internal",
+      "data_volume_gb": 6.0,
+      "used_by": [
+        "ci-cd-pipeline",
+        "release-pipeline"
+      ],
+      "first_seen": "2020-04-22",
+      "locations": [
+        "infra/config/secrets.yaml.enc",
+        "infra/config/staging_secrets.yaml.enc",
+        "infra/config/prod_secrets.yaml.enc"
+      ],
+      "occurrence_count": 3,
+      "confidence": "high",
+      "library_name": null,
+      "library_version": null,
+      "issuer": null,
+      "expiry_date": null,
+      "self_signed": null,
+      "signature_algorithm": null
+    },
+    {
+      "id": "art-010",
+      "name": "partner-api-mutual-tls",
+      "type": "certificate",
+      "algorithm": "ECDSA-P256",
+      "location": "services/partner-api/tls/client_cert.pem",
+      "key_length": 256,
+      "internet_facing": true,
+      "data_classification": "financial",
+      "data_volume_gb": 90.0,
+      "used_by": [
+        "partner-api"
+      ],
+      "first_seen": "2021-12-05",
+      "locations": [
+        "services/partner-api/tls/client_cert.pem"
+      ],
+      "occurrence_count": 1,
+      "confidence": "high",
+      "library_name": null,
+      "library_version": null,
+      "issuer": null,
+      "expiry_date": null,
+      "self_signed": null,
+      "signature_algorithm": null
+    },
+    {
+      "id": "art-011",
+      "name": "code-signing-key",
+      "type": "key",
+      "algorithm": "RSA-3072",
+      "location": "release/signing/codesign.key",
+      "key_length": 3072,
+      "internet_facing": false,
+      "data_classification": "internal",
+      "data_volume_gb": 1.0,
+      "used_by": [
+        "release-pipeline"
+      ],
+      "first_seen": "2019-01-15",
+      "locations": [
+        "release/signing/codesign.key"
+      ],
+      "occurrence_count": 1,
+      "confidence": "high",
+      "library_name": null,
+      "library_version": null,
+      "issuer": null,
+      "expiry_date": null,
+      "self_signed": null,
+      "signature_algorithm": null
+    },
+    {
+      "id": "art-012",
+      "name": "document-signature-service",
+      "type": "algorithm",
+      "algorithm": "ML-DSA-65",
+      "location": "services/edoc/sign.py",
+      "key_length": 65,
+      "internet_facing": true,
+      "data_classification": "PII",
+      "data_volume_gb": 12.0,
+      "used_by": [
+        "edoc-service"
+      ],
+      "first_seen": "2026-01-10",
+      "locations": [
+        "services/edoc/sign.py"
+      ],
+      "occurrence_count": 1,
+      "confidence": "high",
+      "library_name": null,
+      "library_version": null,
+      "issuer": null,
+      "expiry_date": null,
+      "self_signed": null,
+      "signature_algorithm": null
+    },
+    {
+      "id": "art-013",
+      "name": "internal-admin-tls-cert",
+      "type": "certificate",
+      "algorithm": "RSA-2048",
+      "location": "services/internal-admin/tls/cert.pem",
+      "key_length": 2048,
+      "internet_facing": false,
+      "data_classification": "internal",
+      "data_volume_gb": 3.0,
+      "used_by": [
+        "internal-admin"
+      ],
+      "first_seen": "2019-05-01",
+      "locations": [
+        "services/internal-admin/tls/cert.pem"
+      ],
+      "occurrence_count": 1,
+      "confidence": "high",
+      "library_name": null,
+      "library_version": null,
+      "issuer": "Internal-CA",
+      "expiry_date": "2025-12-01",
+      "self_signed": true,
+      "signature_algorithm": "SHA1WITHRSA"
+    },
+    {
+      "id": "art-014",
+      "name": "possible-des-reference-in-comment",
+      "type": "algorithm",
+      "algorithm": "DES",
+      "location": "services/legacy-ftp/README.md",
+      "key_length": 56,
+      "internet_facing": false,
+      "data_classification": "internal",
+      "data_volume_gb": 0.0,
+      "used_by": [],
+      "first_seen": "2015-01-10",
+      "locations": [
+        "services/legacy-ftp/README.md"
+      ],
+      "occurrence_count": 1,
+      "confidence": "low",
+      "library_name": null,
+      "library_version": null,
+      "issuer": null,
+      "expiry_date": null,
+      "self_signed": null,
+      "signature_algorithm": null
+    }
+  ],
+  "classifications": [
+    {
+      "artefact_id": "art-001",
+      "algorithm_family": "RSA",
+      "vulnerability_tier": "shor_breakable",
+      "key_length_adequate": true,
+      "notes": "Public-key algorithm; fully breakable by a sufficiently large quantum computer (Shor's algorithm)."
+    },
+    {
+      "artefact_id": "art-002",
+      "algorithm_family": "ECDSA",
+      "vulnerability_tier": "shor_breakable",
+      "key_length_adequate": true,
+      "notes": "Public-key algorithm; fully breakable by a sufficiently large quantum computer (Shor's algorithm)."
+    },
+    {
+      "artefact_id": "art-003",
+      "algorithm_family": "AES",
+      "vulnerability_tier": "quantum_safe",
+      "key_length_adequate": true,
+      "notes": "Believed quantum-resistant (NIST PQC standard or adequately-sized symmetric key)."
+    },
+    {
+      "artefact_id": "art-004",
+      "algorithm_family": "3DES",
+      "vulnerability_tier": "grover_weakened",
+      "key_length_adequate": true,
+      "notes": "Symmetric/legacy algorithm; effective security roughly halved under Grover's algorithm."
+    },
+    {
+      "artefact_id": "art-005",
+      "algorithm_family": "RSA",
+      "vulnerability_tier": "shor_breakable",
+      "key_length_adequate": true,
+      "notes": "Public-key algorithm; fully breakable by a sufficiently large quantum computer (Shor's algorithm)."
+    },
+    {
+      "artefact_id": "art-006",
+      "algorithm_family": "ECDH",
+      "vulnerability_tier": "shor_breakable",
+      "key_length_adequate": true,
+      "notes": "Public-key algorithm; fully breakable by a sufficiently large quantum computer (Shor's algorithm)."
+    },
+    {
+      "artefact_id": "art-007",
+      "algorithm_family": "DSA",
+      "vulnerability_tier": "shor_breakable",
+      "key_length_adequate": true,
+      "notes": "Public-key algorithm; fully breakable by a sufficiently large quantum computer (Shor's algorithm)."
+    },
+    {
+      "artefact_id": "art-008",
+      "algorithm_family": "ML-KEM",
+      "vulnerability_tier": "quantum_safe",
+      "key_length_adequate": true,
+      "notes": "Believed quantum-resistant (NIST PQC standard or adequately-sized symmetric key)."
+    },
+    {
+      "artefact_id": "art-009",
+      "algorithm_family": "AES",
+      "vulnerability_tier": "grover_weakened",
+      "key_length_adequate": true,
+      "notes": "Symmetric/legacy algorithm; effective security roughly halved under Grover's algorithm."
+    },
+    {
+      "artefact_id": "art-010",
+      "algorithm_family": "ECDSA",
+      "vulnerability_tier": "shor_breakable",
+      "key_length_adequate": true,
+      "notes": "Public-key algorithm; fully breakable by a sufficiently large quantum computer (Shor's algorithm)."
+    },
+    {
+      "artefact_id": "art-011",
+      "algorithm_family": "RSA",
+      "vulnerability_tier": "shor_breakable",
+      "key_length_adequate": true,
+      "notes": "Public-key algorithm; fully breakable by a sufficiently large quantum computer (Shor's algorithm)."
+    },
+    {
+      "artefact_id": "art-012",
+      "algorithm_family": "ML-DSA",
+      "vulnerability_tier": "quantum_safe",
+      "key_length_adequate": true,
+      "notes": "Believed quantum-resistant (NIST PQC standard or adequately-sized symmetric key)."
+    },
+    {
+      "artefact_id": "art-013",
+      "algorithm_family": "RSA",
+      "vulnerability_tier": "shor_breakable",
+      "key_length_adequate": true,
+      "notes": "Public-key algorithm; fully breakable by a sufficiently large quantum computer (Shor's algorithm)."
+    },
+    {
+      "artefact_id": "art-014",
+      "algorithm_family": "DES",
+      "vulnerability_tier": "grover_weakened",
+      "key_length_adequate": true,
+      "notes": "Symmetric/legacy algorithm; effective security roughly halved under Grover's algorithm."
+    }
+  ],
+  "risks": [
+    {
+      "artefact_id": "art-001",
+      "x_data_shelf_life_years": 20,
+      "y_migration_time_years": 0.5,
+      "z_years_to_crqc": 12,
+      "exposure_margin_years": -8.5,
+      "at_risk": true,
+      "risk_tier": "Critical",
+      "business_criticality": "Crown Jewel",
+      "confidence": "high",
+      "confidence_capped": false
+    },
+    {
+      "artefact_id": "art-002",
+      "x_data_shelf_life_years": 20,
+      "y_migration_time_years": 0.5,
+      "z_years_to_crqc": 12,
+      "exposure_margin_years": -8.5,
+      "at_risk": true,
+      "risk_tier": "Critical",
+      "business_criticality": "Crown Jewel",
+      "confidence": "high",
+      "confidence_capped": false
+    },
+    {
+      "artefact_id": "art-003",
+      "x_data_shelf_life_years": 15,
+      "y_migration_time_years": 1.0,
+      "z_years_to_crqc": 12,
+      "exposure_margin_years": -4.0,
+      "at_risk": false,
+      "risk_tier": "Safe",
+      "business_criticality": "Important",
+      "confidence": "high",
+      "confidence_capped": false
+    },
+    {
+      "artefact_id": "art-004",
+      "x_data_shelf_life_years": 7,
+      "y_migration_time_years": 1.0,
+      "z_years_to_crqc": 12,
+      "exposure_margin_years": 4.0,
+      "at_risk": false,
+      "risk_tier": "Low",
+      "business_criticality": "Standard",
+      "confidence": "high",
+      "confidence_capped": false
+    },
+    {
+      "artefact_id": "art-005",
+      "x_data_shelf_life_years": 15,
+      "y_migration_time_years": 1.0,
+      "z_years_to_crqc": 12,
+      "exposure_margin_years": -4.0,
+      "at_risk": true,
+      "risk_tier": "Critical",
+      "business_criticality": "Crown Jewel",
+      "confidence": "high",
+      "confidence_capped": false
+    },
+    {
+      "artefact_id": "art-006",
+      "x_data_shelf_life_years": 20,
+      "y_migration_time_years": 1.5,
+      "z_years_to_crqc": 12,
+      "exposure_margin_years": -9.5,
+      "at_risk": true,
+      "risk_tier": "Critical",
+      "business_criticality": "Crown Jewel",
+      "confidence": "high",
+      "confidence_capped": false
+    },
+    {
+      "artefact_id": "art-007",
+      "x_data_shelf_life_years": 7,
+      "y_migration_time_years": 0.5,
+      "z_years_to_crqc": 12,
+      "exposure_margin_years": 4.5,
+      "at_risk": false,
+      "risk_tier": "Medium",
+      "business_criticality": "Standard",
+      "confidence": "high",
+      "confidence_capped": false
+    },
+    {
+      "artefact_id": "art-008",
+      "x_data_shelf_life_years": 15,
+      "y_migration_time_years": 1.5,
+      "z_years_to_crqc": 12,
+      "exposure_margin_years": -4.5,
+      "at_risk": false,
+      "risk_tier": "Safe",
+      "business_criticality": "Crown Jewel",
+      "confidence": "high",
+      "confidence_capped": false
+    },
+    {
+      "artefact_id": "art-009",
+      "x_data_shelf_life_years": 7,
+      "y_migration_time_years": 1.0,
+      "z_years_to_crqc": 12,
+      "exposure_margin_years": 4.0,
+      "at_risk": false,
+      "risk_tier": "Low",
+      "business_criticality": "Standard",
+      "confidence": "high",
+      "confidence_capped": false
+    },
+    {
+      "artefact_id": "art-010",
+      "x_data_shelf_life_years": 15,
+      "y_migration_time_years": 0.5,
+      "z_years_to_crqc": 12,
+      "exposure_margin_years": -3.5,
+      "at_risk": true,
+      "risk_tier": "Critical",
+      "business_criticality": "Crown Jewel",
+      "confidence": "high",
+      "confidence_capped": false
+    },
+    {
+      "artefact_id": "art-011",
+      "x_data_shelf_life_years": 7,
+      "y_migration_time_years": 0.5,
+      "z_years_to_crqc": 12,
+      "exposure_margin_years": 4.5,
+      "at_risk": false,
+      "risk_tier": "Medium",
+      "business_criticality": "Standard",
+      "confidence": "high",
+      "confidence_capped": false
+    },
+    {
+      "artefact_id": "art-012",
+      "x_data_shelf_life_years": 20,
+      "y_migration_time_years": 1.0,
+      "z_years_to_crqc": 12,
+      "exposure_margin_years": -9.0,
+      "at_risk": false,
+      "risk_tier": "Safe",
+      "business_criticality": "Crown Jewel",
+      "confidence": "high",
+      "confidence_capped": false
+    },
+    {
+      "artefact_id": "art-013",
+      "x_data_shelf_life_years": 7,
+      "y_migration_time_years": 0.5,
+      "z_years_to_crqc": 12,
+      "exposure_margin_years": 4.5,
+      "at_risk": false,
+      "risk_tier": "Medium",
+      "business_criticality": "Standard",
+      "confidence": "high",
+      "confidence_capped": false
+    },
+    {
+      "artefact_id": "art-014",
+      "x_data_shelf_life_years": 7,
+      "y_migration_time_years": 1.0,
+      "z_years_to_crqc": 12,
+      "exposure_margin_years": 4.0,
+      "at_risk": false,
+      "risk_tier": "Low",
+      "business_criticality": "Standard",
+      "confidence": "low",
+      "confidence_capped": false
+    }
+  ],
+  "recommendations": [
+    {
+      "artefact_id": "art-001",
+      "current_algorithm": "RSA-2048",
+      "recommended_algorithm": "ML-KEM-768 (key exchange) + ML-DSA-65 (signatures), or hybrid X25519+ML-KEM-768 during transition",
+      "rationale": "RSA is broken outright by Shor's algorithm; ML-KEM/ML-DSA are the NIST FIPS 203/204 standards.",
+      "latency_overhead_pct": 15.0,
+      "key_or_sig_size_increase": "Keys/ciphertexts ~5-10x larger than RSA-2048",
+      "library_maturity": "Production-ready (liboqs, OpenSSL 3.2+, BoringSSL)",
+      "priority": "Critical"
+    },
+    {
+      "artefact_id": "art-002",
+      "current_algorithm": "ECDSA-P256",
+      "recommended_algorithm": "ML-DSA-65, or hybrid ECDSA+ML-DSA during transition",
+      "rationale": "Elliptic-curve signatures are broken by Shor's algorithm despite small classical key sizes.",
+      "latency_overhead_pct": 8.0,
+      "key_or_sig_size_increase": "Signatures larger than ECDSA (~2.4KB vs 64B) but still practical for TLS",
+      "library_maturity": "Production-ready (liboqs, OpenSSL 3.2+)",
+      "priority": "Critical"
+    },
+    {
+      "artefact_id": "art-003",
+      "current_algorithm": "AES-256-GCM",
+      "recommended_algorithm": "AES-256-GCM",
+      "rationale": "Already quantum-resistant; no migration needed. Monitor for future NIST guidance updates.",
+      "latency_overhead_pct": 0.0,
+      "key_or_sig_size_increase": "N/A",
+      "library_maturity": "N/A",
+      "priority": "Safe"
+    },
+    {
+      "artefact_id": "art-004",
+      "current_algorithm": "3DES",
+      "recommended_algorithm": "AES-256-GCM",
+      "rationale": "3DES is legacy and Grover-weakened; also deprecated for performance/security reasons independent of quantum risk.",
+      "latency_overhead_pct": -20.0,
+      "key_or_sig_size_increase": "No meaningful size change",
+      "library_maturity": "Universally supported",
+      "priority": "Low"
+    },
+    {
+      "artefact_id": "art-005",
+      "current_algorithm": "RSA-4096",
+      "recommended_algorithm": "ML-KEM-768 (key exchange) + ML-DSA-65 (signatures), or hybrid X25519+ML-KEM-768 during transition",
+      "rationale": "RSA is broken outright by Shor's algorithm; ML-KEM/ML-DSA are the NIST FIPS 203/204 standards.",
+      "latency_overhead_pct": 15.0,
+      "key_or_sig_size_increase": "Keys/ciphertexts ~5-10x larger than RSA-2048",
+      "library_maturity": "Production-ready (liboqs, OpenSSL 3.2+, BoringSSL)",
+      "priority": "Critical"
+    },
+    {
+      "artefact_id": "art-006",
+      "current_algorithm": "ECDH-P384",
+      "recommended_algorithm": "ML-KEM-768, or hybrid X25519+ML-KEM-768",
+      "rationale": "Elliptic-curve Diffie-Hellman key exchange is broken by Shor's algorithm.",
+      "latency_overhead_pct": 12.0,
+      "key_or_sig_size_increase": "Ciphertext ~1KB vs ~32B for X25519",
+      "library_maturity": "Production-ready; hybrid mode already in TLS 1.3 drafts",
+      "priority": "Critical"
+    },
+    {
+      "artefact_id": "art-007",
+      "current_algorithm": "DSA-2048",
+      "recommended_algorithm": "ML-DSA-65 (Dilithium)",
+      "rationale": "DSA relies on discrete-log hardness, broken by Shor's algorithm.",
+      "latency_overhead_pct": 10.0,
+      "key_or_sig_size_increase": "Signatures ~2.5x larger than DSA-2048",
+      "library_maturity": "Production-ready (liboqs)",
+      "priority": "Medium"
+    },
+    {
+      "artefact_id": "art-008",
+      "current_algorithm": "ML-KEM-768",
+      "recommended_algorithm": "ML-KEM-768",
+      "rationale": "Already quantum-resistant; no migration needed. Monitor for future NIST guidance updates.",
+      "latency_overhead_pct": 0.0,
+      "key_or_sig_size_increase": "N/A",
+      "library_maturity": "N/A",
+      "priority": "Safe"
+    },
+    {
+      "artefact_id": "art-009",
+      "current_algorithm": "AES-128-CBC",
+      "recommended_algorithm": "AES-256 (same algorithm, upgraded key length)",
+      "rationale": "AES-128 is only Grover-weakened (effective ~64-bit strength), not broken; AES-256 restores full margin.",
+      "latency_overhead_pct": 2.0,
+      "key_or_sig_size_increase": "No size change, negligible perf cost",
+      "library_maturity": "Universally supported",
+      "priority": "Low"
+    },
+    {
+      "artefact_id": "art-010",
+      "current_algorithm": "ECDSA-P256",
+      "recommended_algorithm": "ML-DSA-65, or hybrid ECDSA+ML-DSA during transition",
+      "rationale": "Elliptic-curve signatures are broken by Shor's algorithm despite small classical key sizes.",
+      "latency_overhead_pct": 8.0,
+      "key_or_sig_size_increase": "Signatures larger than ECDSA (~2.4KB vs 64B) but still practical for TLS",
+      "library_maturity": "Production-ready (liboqs, OpenSSL 3.2+)",
+      "priority": "Critical"
+    },
+    {
+      "artefact_id": "art-011",
+      "current_algorithm": "RSA-3072",
+      "recommended_algorithm": "ML-KEM-768 (key exchange) + ML-DSA-65 (signatures), or hybrid X25519+ML-KEM-768 during transition",
+      "rationale": "RSA is broken outright by Shor's algorithm; ML-KEM/ML-DSA are the NIST FIPS 203/204 standards.",
+      "latency_overhead_pct": 15.0,
+      "key_or_sig_size_increase": "Keys/ciphertexts ~5-10x larger than RSA-2048",
+      "library_maturity": "Production-ready (liboqs, OpenSSL 3.2+, BoringSSL)",
+      "priority": "Medium"
+    },
+    {
+      "artefact_id": "art-012",
+      "current_algorithm": "ML-DSA-65",
+      "recommended_algorithm": "ML-DSA-65",
+      "rationale": "Already quantum-resistant; no migration needed. Monitor for future NIST guidance updates.",
+      "latency_overhead_pct": 0.0,
+      "key_or_sig_size_increase": "N/A",
+      "library_maturity": "N/A",
+      "priority": "Safe"
+    },
+    {
+      "artefact_id": "art-013",
+      "current_algorithm": "RSA-2048",
+      "recommended_algorithm": "ML-KEM-768 (key exchange) + ML-DSA-65 (signatures), or hybrid X25519+ML-KEM-768 during transition",
+      "rationale": "RSA is broken outright by Shor's algorithm; ML-KEM/ML-DSA are the NIST FIPS 203/204 standards.",
+      "latency_overhead_pct": 15.0,
+      "key_or_sig_size_increase": "Keys/ciphertexts ~5-10x larger than RSA-2048",
+      "library_maturity": "Production-ready (liboqs, OpenSSL 3.2+, BoringSSL)",
+      "priority": "Medium"
+    },
+    {
+      "artefact_id": "art-014",
+      "current_algorithm": "DES",
+      "recommended_algorithm": "AES-256-GCM",
+      "rationale": "DES is fully deprecated and Grover-weakened; replace regardless of quantum timeline.",
+      "latency_overhead_pct": -30.0,
+      "key_or_sig_size_increase": "No meaningful size change",
+      "library_maturity": "Universally supported",
+      "priority": "Low"
+    }
+  ],
+  "agility_score": {
+    "score": 37.5,
+    "grade": "D",
+    "maturity_level_name": "Level 1 -- Initial",
+    "maturity_level_description": "Some visibility into crypto usage, but migration largely unplanned and reactive.",
+    "summary": "High exposure. Migration should begin immediately on Crown Jewel systems.",
+    "components": {
+      "readiness_pct": 21.4,
+      "urgency_buffer_pct": 40.7,
+      "risk_distribution_pct": 58.9,
+      "quantum_safe_artefacts": 3,
+      "total_artefacts": 14
+    }
+  },
+  "migration_roadmap": [
+    {
+      "phase": "Phase 1 (0-6 months)",
+      "artefact_count": 5,
+      "items": [
+        {
+          "artefact_id": "art-006",
+          "name": "session-key-exchange",
+          "location": "services/session/handshake.go",
+          "current_algorithm": "ECDH-P384",
+          "recommended_algorithm": "ML-KEM-768, or hybrid X25519+ML-KEM-768",
+          "business_criticality": "Crown Jewel",
+          "exposure_margin_years": -9.5
+        },
+        {
+          "artefact_id": "art-001",
+          "name": "api-gateway-tls-cert",
+          "location": "services/api-gateway/tls/cert.pem",
+          "current_algorithm": "RSA-2048",
+          "recommended_algorithm": "ML-KEM-768 (key exchange) + ML-DSA-65 (signatures), or hybrid X25519+ML-KEM-768 during transition",
+          "business_criticality": "Crown Jewel",
+          "exposure_margin_years": -8.5
+        },
+        {
+          "artefact_id": "art-002",
+          "name": "auth-service-jwt-signing-key",
+          "location": "services/auth/keys/jwt_signing.pem",
+          "current_algorithm": "ECDSA-P256",
+          "recommended_algorithm": "ML-DSA-65, or hybrid ECDSA+ML-DSA during transition",
+          "business_criticality": "Crown Jewel",
+          "exposure_margin_years": -8.5
+        },
+        {
+          "artefact_id": "art-005",
+          "name": "openssl-libcrypto",
+          "location": "vendor/openssl/1.1.1",
+          "current_algorithm": "RSA-4096",
+          "recommended_algorithm": "ML-KEM-768 (key exchange) + ML-DSA-65 (signatures), or hybrid X25519+ML-KEM-768 during transition",
+          "business_criticality": "Crown Jewel",
+          "exposure_margin_years": -4.0
+        },
+        {
+          "artefact_id": "art-010",
+          "name": "partner-api-mutual-tls",
+          "location": "services/partner-api/tls/client_cert.pem",
+          "current_algorithm": "ECDSA-P256",
+          "recommended_algorithm": "ML-DSA-65, or hybrid ECDSA+ML-DSA during transition",
+          "business_criticality": "Crown Jewel",
+          "exposure_margin_years": -3.5
+        }
+      ]
+    },
+    {
+      "phase": "Phase 2 (6-18 months)",
+      "artefact_count": 0,
+      "items": []
+    },
+    {
+      "phase": "Phase 3 (18-36 months)",
+      "artefact_count": 3,
+      "items": [
+        {
+          "artefact_id": "art-007",
+          "name": "internal-log-signing-key",
+          "location": "services/audit/log_signer.py",
+          "current_algorithm": "DSA-2048",
+          "recommended_algorithm": "ML-DSA-65 (Dilithium)",
+          "business_criticality": "Standard",
+          "exposure_margin_years": 4.5
+        },
+        {
+          "artefact_id": "art-011",
+          "name": "code-signing-key",
+          "location": "release/signing/codesign.key",
+          "current_algorithm": "RSA-3072",
+          "recommended_algorithm": "ML-KEM-768 (key exchange) + ML-DSA-65 (signatures), or hybrid X25519+ML-KEM-768 during transition",
+          "business_criticality": "Standard",
+          "exposure_margin_years": 4.5
+        },
+        {
+          "artefact_id": "art-013",
+          "name": "internal-admin-tls-cert",
+          "location": "services/internal-admin/tls/cert.pem",
+          "current_algorithm": "RSA-2048",
+          "recommended_algorithm": "ML-KEM-768 (key exchange) + ML-DSA-65 (signatures), or hybrid X25519+ML-KEM-768 during transition",
+          "business_criticality": "Standard",
+          "exposure_margin_years": 4.5
+        }
+      ]
+    },
+    {
+      "phase": "Phase 4 (36+ months / monitor)",
+      "artefact_count": 3,
+      "items": [
+        {
+          "artefact_id": "art-004",
+          "name": "legacy-file-transfer-cipher",
+          "location": "services/legacy-ftp/cipher.c",
+          "current_algorithm": "3DES",
+          "recommended_algorithm": "AES-256-GCM",
+          "business_criticality": "Standard",
+          "exposure_margin_years": 4.0
+        },
+        {
+          "artefact_id": "art-009",
+          "name": "config-secrets-cipher",
+          "location": "infra/config/secrets.yaml.enc",
+          "current_algorithm": "AES-128-CBC",
+          "recommended_algorithm": "AES-256 (same algorithm, upgraded key length)",
+          "business_criticality": "Standard",
+          "exposure_margin_years": 4.0
+        },
+        {
+          "artefact_id": "art-014",
+          "name": "possible-des-reference-in-comment",
+          "location": "services/legacy-ftp/README.md",
+          "current_algorithm": "DES",
+          "recommended_algorithm": "AES-256-GCM",
+          "business_criticality": "Standard",
+          "exposure_margin_years": 4.0
+        }
+      ]
+    }
+  ],
+  "harvest_now_decrypt_later": {
+    "years_to_crqc_assumption": 12,
+    "total_exposed_gb": 480.0,
+    "exposed_artefact_count": 3,
+    "headline": "480.0 GB of data being encrypted today is harvestable now and would be readable within 12 years, while still being sensitive.",
+    "top_exposed_artefacts": [
+      {
+        "artefact_id": "art-005",
+        "name": "openssl-libcrypto",
+        "location": "vendor/openssl/1.1.1",
+        "algorithm": "RSA-4096",
+        "data_classification": "financial",
+        "data_volume_gb": 300.0,
+        "years_data_remains_sensitive_past_crqc": 3
+      },
+      {
+        "artefact_id": "art-001",
+        "name": "api-gateway-tls-cert",
+        "location": "services/api-gateway/tls/cert.pem",
+        "algorithm": "RSA-2048",
+        "data_classification": "PII",
+        "data_volume_gb": 120.0,
+        "years_data_remains_sensitive_past_crqc": 8
+      },
+      {
+        "artefact_id": "art-006",
+        "name": "session-key-exchange",
+        "location": "services/session/handshake.go",
+        "algorithm": "ECDH-P384",
+        "data_classification": "PII",
+        "data_volume_gb": 60.0,
+        "years_data_remains_sensitive_past_crqc": 8
+      }
+    ]
+  },
+  "dependency_blast_radius": {
+    "graph": {
+      "nodes": [
+        {
+          "id": "art-001",
+          "label": "api-gateway-tls-cert",
+          "risk_tier": "Critical"
+        },
+        {
+          "id": "art-002",
+          "label": "auth-service-jwt-signing-key",
+          "risk_tier": "Critical"
+        },
+        {
+          "id": "art-003",
+          "label": "payments-db-encryption",
+          "risk_tier": "Safe"
+        },
+        {
+          "id": "art-004",
+          "label": "legacy-file-transfer-cipher",
+          "risk_tier": "Low"
+        },
+        {
+          "id": "art-005",
+          "label": "openssl-libcrypto",
+          "risk_tier": "Critical"
+        },
+        {
+          "id": "art-006",
+          "label": "session-key-exchange",
+          "risk_tier": "Critical"
+        },
+        {
+          "id": "art-007",
+          "label": "internal-log-signing-key",
+          "risk_tier": "Medium"
+        },
+        {
+          "id": "art-008",
+          "label": "next-gen-vpn-handshake",
+          "risk_tier": "Safe"
+        },
+        {
+          "id": "art-009",
+          "label": "config-secrets-cipher",
+          "risk_tier": "Low"
+        },
+        {
+          "id": "art-010",
+          "label": "partner-api-mutual-tls",
+          "risk_tier": "Critical"
+        },
+        {
+          "id": "art-011",
+          "label": "code-signing-key",
+          "risk_tier": "Medium"
+        },
+        {
+          "id": "art-012",
+          "label": "document-signature-service",
+          "risk_tier": "Safe"
+        },
+        {
+          "id": "art-013",
+          "label": "internal-admin-tls-cert",
+          "risk_tier": "Medium"
+        },
+        {
+          "id": "art-014",
+          "label": "possible-des-reference-in-comment",
+          "risk_tier": "Low"
+        }
+      ],
+      "edges": [
+        {
+          "from": "art-001",
+          "to": "mobile-app"
+        },
+        {
+          "from": "art-001",
+          "to": "partner-api"
+        },
+        {
+          "from": "art-001",
+          "to": "web-frontend"
+        },
+        {
+          "from": "art-002",
+          "to": "mobile-app"
+        },
+        {
+          "from": "art-002",
+          "to": "web-frontend"
+        },
+        {
+          "from": "art-002",
+          "to": "partner-api"
+        },
+        {
+          "from": "art-002",
+          "to": "internal-admin"
+        },
+        {
+          "from": "art-003",
+          "to": "billing-service"
+        },
+        {
+          "from": "art-003",
+          "to": "reporting-service"
+        },
+        {
+          "from": "art-004",
+          "to": "batch-processor"
+        },
+        {
+          "from": "art-005",
+          "to": "payments-service"
+        },
+        {
+          "from": "art-005",
+          "to": "auth-service"
+        },
+        {
+          "from": "art-005",
+          "to": "api-gateway"
+        },
+        {
+          "from": "art-005",
+          "to": "partner-api"
+        },
+        {
+          "from": "art-006",
+          "to": "mobile-app"
+        },
+        {
+          "from": "art-006",
+          "to": "web-frontend"
+        },
+        {
+          "from": "art-007",
+          "to": "audit-service"
+        },
+        {
+          "from": "art-008",
+          "to": "remote-access-gateway"
+        },
+        {
+          "from": "art-009",
+          "to": "ci-cd-pipeline"
+        },
+        {
+          "from": "art-009",
+          "to": "release-pipeline"
+        },
+        {
+          "from": "art-010",
+          "to": "partner-api"
+        },
+        {
+          "from": "art-011",
+          "to": "release-pipeline"
+        },
+        {
+          "from": "art-012",
+          "to": "edoc-service"
+        },
+        {
+          "from": "art-013",
+          "to": "internal-admin"
+        }
+      ]
+    },
+    "highest_blast_radius": [
+      {
+        "artefact_id": "art-002",
+        "name": "auth-service-jwt-signing-key",
+        "risk_tier": "Critical",
+        "blast_radius": 4,
+        "downstream_components": [
+          "internal-admin",
+          "mobile-app",
+          "partner-api",
+          "web-frontend"
+        ]
+      },
+      {
+        "artefact_id": "art-005",
+        "name": "openssl-libcrypto",
+        "risk_tier": "Critical",
+        "blast_radius": 4,
+        "downstream_components": [
+          "api-gateway",
+          "auth-service",
+          "partner-api",
+          "payments-service"
+        ]
+      },
+      {
+        "artefact_id": "art-001",
+        "name": "api-gateway-tls-cert",
+        "risk_tier": "Critical",
+        "blast_radius": 3,
+        "downstream_components": [
+          "mobile-app",
+          "partner-api",
+          "web-frontend"
+        ]
+      },
+      {
+        "artefact_id": "art-006",
+        "name": "session-key-exchange",
+        "risk_tier": "Critical",
+        "blast_radius": 2,
+        "downstream_components": [
+          "mobile-app",
+          "web-frontend"
+        ]
+      },
+      {
+        "artefact_id": "art-010",
+        "name": "partner-api-mutual-tls",
+        "risk_tier": "Critical",
+        "blast_radius": 1,
+        "downstream_components": [
+          "partner-api"
+        ]
+      }
+    ]
+  },
+  "regulatory_flags": [
+    {
+      "artefact_id": "art-001",
+      "frameworks": [
+        "DPDP Act 2023",
+        "CERT-In Directions 2022",
+        "NCIIPC Guidelines"
+      ],
+      "reason": "Flagged for review under: processes/protects personal data of Indian residents; internet-facing system in scope for CERT-In logging/incident directions; potentially qualifies as sensitive/critical infrastructure exposure. This is an automated triage suggestion, not a legal compliance determination -- route to a compliance/legal reviewer for confirmation."
+    },
+    {
+      "artefact_id": "art-002",
+      "frameworks": [
+        "DPDP Act 2023",
+        "CERT-In Directions 2022",
+        "NCIIPC Guidelines"
+      ],
+      "reason": "Flagged for review under: processes/protects personal data of Indian residents; internet-facing system in scope for CERT-In logging/incident directions; potentially qualifies as sensitive/critical infrastructure exposure. This is an automated triage suggestion, not a legal compliance determination -- route to a compliance/legal reviewer for confirmation."
+    },
+    {
+      "artefact_id": "art-003",
+      "frameworks": [
+        "RBI Cybersecurity Framework",
+        "SEBI Cybersecurity Framework"
+      ],
+      "reason": "Flagged for review under: protects financial/payment data. This is an automated triage suggestion, not a legal compliance determination -- route to a compliance/legal reviewer for confirmation."
+    },
+    {
+      "artefact_id": "art-004",
+      "frameworks": [],
+      "reason": "No specific Indian regulatory framework auto-matched based on current classification tags."
+    },
+    {
+      "artefact_id": "art-005",
+      "frameworks": [
+        "RBI Cybersecurity Framework",
+        "SEBI Cybersecurity Framework",
+        "CERT-In Directions 2022",
+        "NCIIPC Guidelines"
+      ],
+      "reason": "Flagged for review under: protects financial/payment data; internet-facing system in scope for CERT-In logging/incident directions; potentially qualifies as sensitive/critical infrastructure exposure. This is an automated triage suggestion, not a legal compliance determination -- route to a compliance/legal reviewer for confirmation."
+    },
+    {
+      "artefact_id": "art-006",
+      "frameworks": [
+        "DPDP Act 2023",
+        "CERT-In Directions 2022",
+        "NCIIPC Guidelines"
+      ],
+      "reason": "Flagged for review under: processes/protects personal data of Indian residents; internet-facing system in scope for CERT-In logging/incident directions; potentially qualifies as sensitive/critical infrastructure exposure. This is an automated triage suggestion, not a legal compliance determination -- route to a compliance/legal reviewer for confirmation."
+    },
+    {
+      "artefact_id": "art-007",
+      "frameworks": [],
+      "reason": "No specific Indian regulatory framework auto-matched based on current classification tags."
+    },
+    {
+      "artefact_id": "art-008",
+      "frameworks": [
+        "RBI Cybersecurity Framework",
+        "SEBI Cybersecurity Framework",
+        "CERT-In Directions 2022",
+        "NCIIPC Guidelines"
+      ],
+      "reason": "Flagged for review under: protects financial/payment data; internet-facing system in scope for CERT-In logging/incident directions; potentially qualifies as sensitive/critical infrastructure exposure. This is an automated triage suggestion, not a legal compliance determination -- route to a compliance/legal reviewer for confirmation."
+    },
+    {
+      "artefact_id": "art-009",
+      "frameworks": [],
+      "reason": "No specific Indian regulatory framework auto-matched based on current classification tags."
+    },
+    {
+      "artefact_id": "art-010",
+      "frameworks": [
+        "RBI Cybersecurity Framework",
+        "SEBI Cybersecurity Framework",
+        "CERT-In Directions 2022",
+        "NCIIPC Guidelines"
+      ],
+      "reason": "Flagged for review under: protects financial/payment data; internet-facing system in scope for CERT-In logging/incident directions; potentially qualifies as sensitive/critical infrastructure exposure. This is an automated triage suggestion, not a legal compliance determination -- route to a compliance/legal reviewer for confirmation."
+    },
+    {
+      "artefact_id": "art-011",
+      "frameworks": [],
+      "reason": "No specific Indian regulatory framework auto-matched based on current classification tags."
+    },
+    {
+      "artefact_id": "art-012",
+      "frameworks": [
+        "DPDP Act 2023",
+        "CERT-In Directions 2022",
+        "NCIIPC Guidelines"
+      ],
+      "reason": "Flagged for review under: processes/protects personal data of Indian residents; internet-facing system in scope for CERT-In logging/incident directions; potentially qualifies as sensitive/critical infrastructure exposure. This is an automated triage suggestion, not a legal compliance determination -- route to a compliance/legal reviewer for confirmation."
+    },
+    {
+      "artefact_id": "art-013",
+      "frameworks": [],
+      "reason": "No specific Indian regulatory framework auto-matched based on current classification tags."
+    },
+    {
+      "artefact_id": "art-014",
+      "frameworks": [],
+      "reason": "No specific Indian regulatory framework auto-matched based on current classification tags."
+    }
+  ],
+  "cve_findings": [
+    {
+      "artefact_id": "art-005",
+      "cve_id": "CVE-2021-3450",
+      "severity": "High",
+      "description": "X509_V_FLAG_X509_STRICT bypass allowing certificate chain verification bypass.",
+      "affected_version": "openssl 1.1.0 (fixed in 1.1.1)"
+    },
+    {
+      "artefact_id": "art-005",
+      "cve_id": "CVE-2022-0778",
+      "severity": "High",
+      "description": "Infinite loop in BN_mod_sqrt() reachable via malformed certificate (DoS).",
+      "affected_version": "openssl 1.1.0 (fixed in 1.1.1n)"
+    }
+  ],
+  "certificate_findings": [
+    {
+      "artefact_id": "art-013",
+      "issues": [
+        "Expired 299 days ago",
+        "Self-signed certificate in use -- verify this is intentional (e.g. internal mTLS) and not accidental production exposure",
+        "Weak certificate signature hash (SHA1WITHRSA) -- collision-prone, migrate to SHA-256 or better"
+      ],
+      "expiry_date": "2025-12-01",
+      "days_until_expiry": -299
+    }
+  ]
+}

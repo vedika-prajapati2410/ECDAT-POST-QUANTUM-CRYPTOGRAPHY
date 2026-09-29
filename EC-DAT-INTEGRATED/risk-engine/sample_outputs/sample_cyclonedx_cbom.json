@@ -1,0 +1,924 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "serialNumber": "urn:uuid:151ff05f-3437-5281-a87f-976cc0e44226",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-09-26T17:46:38.294287+00:00",
+    "tools": [
+      {
+        "vendor": "ECDAT",
+        "name": "Enterprise Cryptographic Discovery & Analysis Tool",
+        "version": "1.0"
+      }
+    ],
+    "properties": [
+      {
+        "name": "ecdat:years_to_crqc_assumption",
+        "value": "12"
+      },
+      {
+        "name": "ecdat:agility_score",
+        "value": "37.5"
+      },
+      {
+        "name": "ecdat:generated_at",
+        "value": "2026-09-26T17:46:38.294490+00:00"
+      }
+    ]
+  },
+  "components": [
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "art-001",
+      "name": "api-gateway-tls-cert",
+      "cryptoProperties": {
+        "assetType": "certificate",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "RSA-2048",
+          "curve": null,
+          "executionEnvironment": "software-plain-ram",
+          "cryptoFunctions": [
+            "encrypt",
+            "decrypt",
+            "sign",
+            "verify"
+          ],
+          "classicalSecurityLevel": 2048,
+          "nistQuantumSecurityLevel": 0
+        },
+        "oid": null
+      },
+      "properties": [
+        {
+          "name": "ecdat:location",
+          "value": "services/api-gateway/tls/cert.pem"
+        },
+        {
+          "name": "ecdat:occurrence_count",
+          "value": "1"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "high"
+        },
+        {
+          "name": "ecdat:vulnerability_tier",
+          "value": "shor_breakable"
+        },
+        {
+          "name": "ecdat:risk_tier",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:exposure_margin_years",
+          "value": "-8.5"
+        },
+        {
+          "name": "ecdat:business_criticality",
+          "value": "Crown Jewel"
+        },
+        {
+          "name": "ecdat:recommended_algorithm",
+          "value": "ML-KEM-768 (key exchange) + ML-DSA-65 (signatures), or hybrid X25519+ML-KEM-768 during transition"
+        },
+        {
+          "name": "ecdat:data_classification",
+          "value": "PII"
+        },
+        {
+          "name": "ecdat:internet_facing",
+          "value": "True"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "art-002",
+      "name": "auth-service-jwt-signing-key",
+      "cryptoProperties": {
+        "assetType": "related-crypto-material",
+        "algorithmProperties": {
+          "primitive": "signature",
+          "parameterSetIdentifier": "ECDSA-P256",
+          "curve": "ECDSA-P256",
+          "executionEnvironment": "software-plain-ram",
+          "cryptoFunctions": [
+            "sign",
+            "verify"
+          ],
+          "classicalSecurityLevel": 256,
+          "nistQuantumSecurityLevel": 0
+        },
+        "oid": null
+      },
+      "properties": [
+        {
+          "name": "ecdat:location",
+          "value": "services/auth/keys/jwt_signing.pem"
+        },
+        {
+          "name": "ecdat:occurrence_count",
+          "value": "1"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "high"
+        },
+        {
+          "name": "ecdat:vulnerability_tier",
+          "value": "shor_breakable"
+        },
+        {
+          "name": "ecdat:risk_tier",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:exposure_margin_years",
+          "value": "-8.5"
+        },
+        {
+          "name": "ecdat:business_criticality",
+          "value": "Crown Jewel"
+        },
+        {
+          "name": "ecdat:recommended_algorithm",
+          "value": "ML-DSA-65, or hybrid ECDSA+ML-DSA during transition"
+        },
+        {
+          "name": "ecdat:data_classification",
+          "value": "PII"
+        },
+        {
+          "name": "ecdat:internet_facing",
+          "value": "True"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "art-003",
+      "name": "payments-db-encryption",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "block-cipher",
+          "parameterSetIdentifier": "AES-256-GCM",
+          "curve": null,
+          "executionEnvironment": "software-plain-ram",
+          "cryptoFunctions": [
+            "encrypt",
+            "decrypt"
+          ],
+          "classicalSecurityLevel": 256,
+          "nistQuantumSecurityLevel": null
+        },
+        "oid": null
+      },
+      "properties": [
+        {
+          "name": "ecdat:location",
+          "value": "services/payments/db/encryption.py"
+        },
+        {
+          "name": "ecdat:occurrence_count",
+          "value": "1"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "high"
+        },
+        {
+          "name": "ecdat:vulnerability_tier",
+          "value": "quantum_safe"
+        },
+        {
+          "name": "ecdat:risk_tier",
+          "value": "Safe"
+        },
+        {
+          "name": "ecdat:exposure_margin_years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:business_criticality",
+          "value": "Important"
+        },
+        {
+          "name": "ecdat:recommended_algorithm",
+          "value": "AES-256-GCM"
+        },
+        {
+          "name": "ecdat:data_classification",
+          "value": "financial"
+        },
+        {
+          "name": "ecdat:internet_facing",
+          "value": "False"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "art-004",
+      "name": "legacy-file-transfer-cipher",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "block-cipher",
+          "parameterSetIdentifier": "3DES",
+          "curve": null,
+          "executionEnvironment": "software-plain-ram",
+          "cryptoFunctions": [
+            "encrypt",
+            "decrypt"
+          ],
+          "classicalSecurityLevel": 168,
+          "nistQuantumSecurityLevel": null
+        },
+        "oid": null
+      },
+      "properties": [
+        {
+          "name": "ecdat:location",
+          "value": "services/legacy-ftp/cipher.c"
+        },
+        {
+          "name": "ecdat:occurrence_count",
+          "value": "1"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "high"
+        },
+        {
+          "name": "ecdat:vulnerability_tier",
+          "value": "grover_weakened"
+        },
+        {
+          "name": "ecdat:risk_tier",
+          "value": "Low"
+        },
+        {
+          "name": "ecdat:exposure_margin_years",
+          "value": "4.0"
+        },
+        {
+          "name": "ecdat:business_criticality",
+          "value": "Standard"
+        },
+        {
+          "name": "ecdat:recommended_algorithm",
+          "value": "AES-256-GCM"
+        },
+        {
+          "name": "ecdat:data_classification",
+          "value": "internal"
+        },
+        {
+          "name": "ecdat:internet_facing",
+          "value": "False"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "art-005",
+      "name": "openssl-libcrypto",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "RSA-4096",
+          "curve": null,
+          "executionEnvironment": "software-plain-ram",
+          "cryptoFunctions": [
+            "encrypt",
+            "decrypt",
+            "sign",
+            "verify"
+          ],
+          "classicalSecurityLevel": 4096,
+          "nistQuantumSecurityLevel": 0
+        },
+        "oid": null
+      },
+      "properties": [
+        {
+          "name": "ecdat:location",
+          "value": "vendor/openssl/1.1.1"
+        },
+        {
+          "name": "ecdat:occurrence_count",
+          "value": "1"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "high"
+        },
+        {
+          "name": "ecdat:vulnerability_tier",
+          "value": "shor_breakable"
+        },
+        {
+          "name": "ecdat:risk_tier",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:exposure_margin_years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:business_criticality",
+          "value": "Crown Jewel"
+        },
+        {
+          "name": "ecdat:recommended_algorithm",
+          "value": "ML-KEM-768 (key exchange) + ML-DSA-65 (signatures), or hybrid X25519+ML-KEM-768 during transition"
+        },
+        {
+          "name": "ecdat:data_classification",
+          "value": "financial"
+        },
+        {
+          "name": "ecdat:internet_facing",
+          "value": "True"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "art-006",
+      "name": "session-key-exchange",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "algorithmProperties": {
+          "primitive": "key-agreement",
+          "parameterSetIdentifier": "ECDH-P384",
+          "curve": "ECDH-P384",
+          "executionEnvironment": "software-plain-ram",
+          "cryptoFunctions": [
+            "keygen",
+            "keyderive"
+          ],
+          "classicalSecurityLevel": 384,
+          "nistQuantumSecurityLevel": 0
+        },
+        "oid": null
+      },
+      "properties": [
+        {
+          "name": "ecdat:location",
+          "value": "services/session/handshake.go"
+        },
+        {
+          "name": "ecdat:occurrence_count",
+          "value": "1"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "high"
+        },
+        {
+          "name": "ecdat:vulnerability_tier",
+          "value": "shor_breakable"
+        },
+        {
+          "name": "ecdat:risk_tier",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:exposure_margin_years",
+          "value": "-9.5"
+        },
+        {
+          "name": "ecdat:business_criticality",
+          "value": "Crown Jewel"
+        },
+        {
+          "name": "ecdat:recommended_algorithm",
+          "value": "ML-KEM-768, or hybrid X25519+ML-KEM-768"
+        },
+        {
+          "name": "ecdat:data_classification",
+          "value": "PII"
+        },
+        {
+          "name": "ecdat:internet_facing",
+          "value": "True"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "art-007",
+      "name": "internal-log-signing-key",
+      "cryptoProperties": {
+        "assetType": "related-crypto-material",
+        "algorithmProperties": {
+          "primitive": "signature",
+          "parameterSetIdentifier": "DSA-2048",
+          "curve": null,
+          "executionEnvironment": "software-plain-ram",
+          "cryptoFunctions": [
+            "sign",
+            "verify"
+          ],
+          "classicalSecurityLevel": 2048,
+          "nistQuantumSecurityLevel": 0
+        },
+        "oid": null
+      },
+      "properties": [
+        {
+          "name": "ecdat:location",
+          "value": "services/audit/log_signer.py"
+        },
+        {
+          "name": "ecdat:occurrence_count",
+          "value": "1"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "high"
+        },
+        {
+          "name": "ecdat:vulnerability_tier",
+          "value": "shor_breakable"
+        },
+        {
+          "name": "ecdat:risk_tier",
+          "value": "Medium"
+        },
+        {
+          "name": "ecdat:exposure_margin_years",
+          "value": "4.5"
+        },
+        {
+          "name": "ecdat:business_criticality",
+          "value": "Standard"
+        },
+        {
+          "name": "ecdat:recommended_algorithm",
+          "value": "ML-DSA-65 (Dilithium)"
+        },
+        {
+          "name": "ecdat:data_classification",
+          "value": "internal"
+        },
+        {
+          "name": "ecdat:internet_facing",
+          "value": "False"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "art-008",
+      "name": "next-gen-vpn-handshake",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "algorithmProperties": {
+          "primitive": "kem",
+          "parameterSetIdentifier": "ML-KEM-768",
+          "curve": null,
+          "executionEnvironment": "software-plain-ram",
+          "cryptoFunctions": [
+            "keygen",
+            "encapsulate",
+            "decapsulate"
+          ],
+          "classicalSecurityLevel": 768,
+          "nistQuantumSecurityLevel": null
+        },
+        "oid": null
+      },
+      "properties": [
+        {
+          "name": "ecdat:location",
+          "value": "services/vpn/handshake_pqc.rs"
+        },
+        {
+          "name": "ecdat:occurrence_count",
+          "value": "1"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "high"
+        },
+        {
+          "name": "ecdat:vulnerability_tier",
+          "value": "quantum_safe"
+        },
+        {
+          "name": "ecdat:risk_tier",
+          "value": "Safe"
+        },
+        {
+          "name": "ecdat:exposure_margin_years",
+          "value": "-4.5"
+        },
+        {
+          "name": "ecdat:business_criticality",
+          "value": "Crown Jewel"
+        },
+        {
+          "name": "ecdat:recommended_algorithm",
+          "value": "ML-KEM-768"
+        },
+        {
+          "name": "ecdat:data_classification",
+          "value": "financial"
+        },
+        {
+          "name": "ecdat:internet_facing",
+          "value": "True"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "art-009",
+      "name": "config-secrets-cipher",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "block-cipher",
+          "parameterSetIdentifier": "AES-128-CBC",
+          "curve": null,
+          "executionEnvironment": "software-plain-ram",
+          "cryptoFunctions": [
+            "encrypt",
+            "decrypt"
+          ],
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": null
+        },
+        "oid": null
+      },
+      "properties": [
+        {
+          "name": "ecdat:location",
+          "value": "infra/config/secrets.yaml.enc"
+        },
+        {
+          "name": "ecdat:occurrence_count",
+          "value": "3"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "high"
+        },
+        {
+          "name": "ecdat:vulnerability_tier",
+          "value": "grover_weakened"
+        },
+        {
+          "name": "ecdat:risk_tier",
+          "value": "Low"
+        },
+        {
+          "name": "ecdat:exposure_margin_years",
+          "value": "4.0"
+        },
+        {
+          "name": "ecdat:business_criticality",
+          "value": "Standard"
+        },
+        {
+          "name": "ecdat:recommended_algorithm",
+          "value": "AES-256 (same algorithm, upgraded key length)"
+        },
+        {
+          "name": "ecdat:data_classification",
+          "value": "internal"
+        },
+        {
+          "name": "ecdat:internet_facing",
+          "value": "False"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "art-010",
+      "name": "partner-api-mutual-tls",
+      "cryptoProperties": {
+        "assetType": "certificate",
+        "algorithmProperties": {
+          "primitive": "signature",
+          "parameterSetIdentifier": "ECDSA-P256",
+          "curve": "ECDSA-P256",
+          "executionEnvironment": "software-plain-ram",
+          "cryptoFunctions": [
+            "sign",
+            "verify"
+          ],
+          "classicalSecurityLevel": 256,
+          "nistQuantumSecurityLevel": 0
+        },
+        "oid": null
+      },
+      "properties": [
+        {
+          "name": "ecdat:location",
+          "value": "services/partner-api/tls/client_cert.pem"
+        },
+        {
+          "name": "ecdat:occurrence_count",
+          "value": "1"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "high"
+        },
+        {
+          "name": "ecdat:vulnerability_tier",
+          "value": "shor_breakable"
+        },
+        {
+          "name": "ecdat:risk_tier",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:exposure_margin_years",
+          "value": "-3.5"
+        },
+        {
+          "name": "ecdat:business_criticality",
+          "value": "Crown Jewel"
+        },
+        {
+          "name": "ecdat:recommended_algorithm",
+          "value": "ML-DSA-65, or hybrid ECDSA+ML-DSA during transition"
+        },
+        {
+          "name": "ecdat:data_classification",
+          "value": "financial"
+        },
+        {
+          "name": "ecdat:internet_facing",
+          "value": "True"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "art-011",
+      "name": "code-signing-key",
+      "cryptoProperties": {
+        "assetType": "related-crypto-material",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "RSA-3072",
+          "curve": null,
+          "executionEnvironment": "software-plain-ram",
+          "cryptoFunctions": [
+            "encrypt",
+            "decrypt",
+            "sign",
+            "verify"
+          ],
+          "classicalSecurityLevel": 3072,
+          "nistQuantumSecurityLevel": 0
+        },
+        "oid": null
+      },
+      "properties": [
+        {
+          "name": "ecdat:location",
+          "value": "release/signing/codesign.key"
+        },
+        {
+          "name": "ecdat:occurrence_count",
+          "value": "1"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "high"
+        },
+        {
+          "name": "ecdat:vulnerability_tier",
+          "value": "shor_breakable"
+        },
+        {
+          "name": "ecdat:risk_tier",
+          "value": "Medium"
+        },
+        {
+          "name": "ecdat:exposure_margin_years",
+          "value": "4.5"
+        },
+        {
+          "name": "ecdat:business_criticality",
+          "value": "Standard"
+        },
+        {
+          "name": "ecdat:recommended_algorithm",
+          "value": "ML-KEM-768 (key exchange) + ML-DSA-65 (signatures), or hybrid X25519+ML-KEM-768 during transition"
+        },
+        {
+          "name": "ecdat:data_classification",
+          "value": "internal"
+        },
+        {
+          "name": "ecdat:internet_facing",
+          "value": "False"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "art-012",
+      "name": "document-signature-service",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "signature",
+          "parameterSetIdentifier": "ML-DSA-65",
+          "curve": null,
+          "executionEnvironment": "software-plain-ram",
+          "cryptoFunctions": [
+            "keygen",
+            "sign",
+            "verify"
+          ],
+          "classicalSecurityLevel": 65,
+          "nistQuantumSecurityLevel": null
+        },
+        "oid": null
+      },
+      "properties": [
+        {
+          "name": "ecdat:location",
+          "value": "services/edoc/sign.py"
+        },
+        {
+          "name": "ecdat:occurrence_count",
+          "value": "1"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "high"
+        },
+        {
+          "name": "ecdat:vulnerability_tier",
+          "value": "quantum_safe"
+        },
+        {
+          "name": "ecdat:risk_tier",
+          "value": "Safe"
+        },
+        {
+          "name": "ecdat:exposure_margin_years",
+          "value": "-9.0"
+        },
+        {
+          "name": "ecdat:business_criticality",
+          "value": "Crown Jewel"
+        },
+        {
+          "name": "ecdat:recommended_algorithm",
+          "value": "ML-DSA-65"
+        },
+        {
+          "name": "ecdat:data_classification",
+          "value": "PII"
+        },
+        {
+          "name": "ecdat:internet_facing",
+          "value": "True"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "art-013",
+      "name": "internal-admin-tls-cert",
+      "cryptoProperties": {
+        "assetType": "certificate",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "RSA-2048",
+          "curve": null,
+          "executionEnvironment": "software-plain-ram",
+          "cryptoFunctions": [
+            "encrypt",
+            "decrypt",
+            "sign",
+            "verify"
+          ],
+          "classicalSecurityLevel": 2048,
+          "nistQuantumSecurityLevel": 0
+        },
+        "oid": null
+      },
+      "properties": [
+        {
+          "name": "ecdat:location",
+          "value": "services/internal-admin/tls/cert.pem"
+        },
+        {
+          "name": "ecdat:occurrence_count",
+          "value": "1"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "high"
+        },
+        {
+          "name": "ecdat:vulnerability_tier",
+          "value": "shor_breakable"
+        },
+        {
+          "name": "ecdat:risk_tier",
+          "value": "Medium"
+        },
+        {
+          "name": "ecdat:exposure_margin_years",
+          "value": "4.5"
+        },
+        {
+          "name": "ecdat:business_criticality",
+          "value": "Standard"
+        },
+        {
+          "name": "ecdat:recommended_algorithm",
+          "value": "ML-KEM-768 (key exchange) + ML-DSA-65 (signatures), or hybrid X25519+ML-KEM-768 during transition"
+        },
+        {
+          "name": "ecdat:data_classification",
+          "value": "internal"
+        },
+        {
+          "name": "ecdat:internet_facing",
+          "value": "False"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "art-014",
+      "name": "possible-des-reference-in-comment",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "block-cipher",
+          "parameterSetIdentifier": "DES",
+          "curve": null,
+          "executionEnvironment": "software-plain-ram",
+          "cryptoFunctions": [
+            "encrypt",
+            "decrypt"
+          ],
+          "classicalSecurityLevel": 56,
+          "nistQuantumSecurityLevel": null
+        },
+        "oid": null
+      },
+      "properties": [
+        {
+          "name": "ecdat:location",
+          "value": "services/legacy-ftp/README.md"
+        },
+        {
+          "name": "ecdat:occurrence_count",
+          "value": "1"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "low"
+        },
+        {
+          "name": "ecdat:vulnerability_tier",
+          "value": "grover_weakened"
+        },
+        {
+          "name": "ecdat:risk_tier",
+          "value": "Low"
+        },
+        {
+          "name": "ecdat:exposure_margin_years",
+          "value": "4.0"
+        },
+        {
+          "name": "ecdat:business_criticality",
+          "value": "Standard"
+        },
+        {
+          "name": "ecdat:recommended_algorithm",
+          "value": "AES-256-GCM"
+        },
+        {
+          "name": "ecdat:data_classification",
+          "value": "internal"
+        },
+        {
+          "name": "ecdat:internet_facing",
+          "value": "False"
+        }
+      ]
+    }
+  ]
+}

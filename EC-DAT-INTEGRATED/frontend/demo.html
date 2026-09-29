@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ECDAT — Live Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0C0D0F; --surface:#17181C; --surface-2:#1E2024; --line:#2B2D33;
+    --text:#EAEAE7; --text-dim:#84868C; --brass:#B08D57; --sage:#6E8574; --brick:#8C4A3A;
+    --mono:'IBM Plex Mono', monospace; --display:'Space Grotesk', sans-serif;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  body{ background:var(--bg); color:var(--text); font-family:var(--display); }
+  a{ color:inherit; }
+  header{
+    display:flex; align-items:center; justify-content:space-between; padding:20px 32px;
+    border-bottom:1px solid var(--line);
+  }
+  .brand b{ font-size:15px; }
+  .brand span{ display:block; font-family:var(--mono); font-size:11px; color:var(--text-dim); margin-top:2px; }
+  .back-link{ font-family:var(--mono); font-size:11.5px; color:var(--text-dim); text-decoration:none; border:1px solid var(--line); padding:8px 14px; }
+  .back-link:hover{ color:var(--text); border-color:var(--brass); }
+
+  .repo-row{ display:flex; gap:10px; padding:24px 32px 0; }
+  .repo-input{ flex:1; max-width:520px; background:var(--surface-2); border:1px solid var(--line); color:var(--text); font-family:var(--mono); font-size:12.5px; padding:12px 16px; outline:none; }
+  .repo-input:focus{ border-color:var(--brass); }
+  .scan-btn{ background:var(--text); color:var(--bg); border:none; font-family:var(--mono); font-weight:600; font-size:12px; padding:12px 22px; cursor:pointer; }
+  .scan-btn:hover{ background:var(--brass); }
+  .scan-btn:disabled{ background:var(--line); color:var(--text-dim); cursor:not-allowed; }
+  .scan-readout{ font-family:var(--mono); font-size:12px; color:var(--sage); padding:14px 32px 0; min-height:18px; }
+  .scan-progress{ height:2px; background:var(--line); margin:8px 32px 0; }
+  .scan-progress-fill{ height:100%; background:var(--brass); width:0%; transition:width .15s linear; }
+
+  main{ display:grid; grid-template-columns:1.15fr 0.85fr; gap:1px; background:var(--line); margin-top:24px; }
+  @media (max-width:980px){ main{ grid-template-columns:1fr; } }
+  section.pane{ background:var(--bg); padding:24px 28px; }
+  .pane-head{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:16px; }
+  .pane-head h2{ font-size:14px; font-weight:600; }
+  .pane-head span{ font-family:var(--mono); font-size:11px; color:var(--text-dim); }
+
+  .stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); margin-bottom:22px; border:1px solid var(--line); }
+  .stat{ background:var(--surface); padding:16px 18px; }
+  .stat .num{ font-family:var(--mono); font-size:26px; font-weight:600; line-height:1; }
+  .stat .lbl{ font-size:11px; color:var(--text-dim); margin-top:6px; }
+  .stat.c-safe .num{ color:var(--sage); } .stat.c-warn .num{ color:var(--brass); } .stat.c-risk .num{ color:var(--brick); }
+
+  .table-tools{ display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap; }
+  .filter-chip{ font-family:var(--mono); font-size:10.5px; padding:6px 12px; border:1px solid var(--line); color:var(--text-dim); cursor:pointer; background:transparent; }
+  .filter-chip.active{ border-color:var(--brass); color:var(--text); }
+  table{ width:100%; border-collapse:collapse; font-size:12.5px; }
+  thead th{ text-align:left; font-family:var(--mono); font-size:10.5px; color:var(--text-dim); font-weight:500; padding:8px 10px; border-bottom:1px solid var(--line); cursor:pointer; }
+  thead th:hover{ color:var(--text); }
+  tbody tr{ border-bottom:1px solid var(--line); cursor:pointer; }
+  tbody tr:hover{ background:var(--surface); }
+  tbody td{ padding:10px 10px; font-family:var(--mono); }
+  .artefact-name{ font-family:var(--display); font-weight:500; font-size:13px; }
+  .artefact-path{ color:var(--text-dim); font-size:10.5px; margin-top:2px; }
+  .badge{ display:inline-block; font-size:10px; padding:3px 8px; border:1px solid currentColor; }
+  .badge.risk{ color:var(--brick); } .badge.warn{ color:var(--brass); } .badge.safe{ color:var(--sage); }
+  .crit-bars{ display:flex; gap:2px; }
+  .crit-bars span{ width:5px; height:14px; background:var(--line); display:inline-block; }
+  .crit-bars span.on{ background:var(--text-dim); }
+
+  #matrix{ width:100%; height:340px; display:block; }
+  .legend{ display:flex; gap:18px; margin-top:14px; font-family:var(--mono); font-size:10.5px; color:var(--text-dim); }
+  .legend i{ display:inline-block; width:8px; height:8px; margin-right:6px; }
+
+  .rec-item{ border:1px solid var(--line); padding:14px 16px; margin-bottom:10px; }
+  .rec-item .rec-top{ display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+  .rec-item .rec-name{ font-weight:600; font-size:12.5px; }
+  .rec-item .rec-detail{ font-family:var(--mono); font-size:11px; color:var(--text-dim); line-height:1.6; }
+  .arrow{ color:var(--brass); }
+
+  .overlay{ position:fixed; inset:0; background:rgba(5,6,8,0.65); opacity:0; pointer-events:none; transition:opacity .25s; z-index:10; }
+  .overlay.open{ opacity:1; pointer-events:all; }
+  .drawer{ position:fixed; top:0; right:0; bottom:0; width:430px; max-width:92vw; background:var(--surface); border-left:1px solid var(--line); transform:translateX(100%); transition:transform .3s cubic-bezier(.4,0,.2,1); z-index:11; padding:30px; overflow-y:auto; }
+  .drawer.open{ transform:translateX(0); }
+  .drawer-close{ background:none; border:none; color:var(--text-dim); font-family:var(--mono); font-size:12px; cursor:pointer; margin-bottom:22px; }
+  .drawer h3{ font-size:20px; margin-bottom:4px; }
+  .drawer .sub{ font-family:var(--mono); font-size:11.5px; color:var(--text-dim); margin-bottom:24px; }
+  .drawer-section{ margin-bottom:22px; }
+  .drawer-section h4{ font-size:10.5px; letter-spacing:.3px; color:var(--text-dim); margin-bottom:10px; font-family:var(--mono); }
+  .kv{ display:flex; justify-content:space-between; font-size:12.5px; padding:7px 0; border-bottom:1px dashed var(--line); }
+  .kv span:first-child{ color:var(--text-dim); } .kv span:last-child{ font-family:var(--mono); }
+  .mosca-bar{ height:8px; background:var(--line); position:relative; margin-top:10px; }
+  .mosca-fill{ position:absolute; left:0; top:0; bottom:0; }
+  .mosca-marker{ position:absolute; top:-4px; width:2px; height:16px; background:var(--text); }
+
+  footer{ padding:16px 32px; border-top:1px solid var(--line); font-family:var(--mono); font-size:10.5px; color:var(--text-dim); display:flex; justify-content:space-between; margin-top:8px; }
+  .export-btn{ background:none; border:1px solid var(--line); color:var(--text-dim); font-family:var(--mono); font-size:10.5px; padding:6px 12px; cursor:pointer; }
+  .export-btn:hover{ color:var(--text); border-color:var(--brass); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand"><b>ECDAT — Live Demo</b><span>Enterprise Cryptographic Discovery &amp; Analysis Tool</span></div>
+  <a class="back-link" href="/">← Back to overview</a>
+</header>
+
+<div class="repo-row">
+  <input class="repo-input" id="repoInput" type="text" value="github.com/example-org/payments-service">
+  <button class="scan-btn" id="scanBtn">Run scan</button>
+</div>
+<div class="scan-readout" id="scanLine">Awaiting scan…</div>
+<div class="scan-progress"><div class="scan-progress-fill" id="scanFill"></div></div>
+
+<main>
+  <section class="pane">
+    <div class="pane-head"><h2>Artefact inventory</h2><span id="invCount">18 artefacts</span></div>
+    <div class="stats">
+      <div class="stat c-risk"><div class="num" id="statRisk">0</div><div class="lbl">Quantum-vulnerable</div></div>
+      <div class="stat c-warn"><div class="num" id="statWarn">0</div><div class="lbl">At risk / weak params</div></div>
+      <div class="stat c-safe"><div class="num" id="statSafe">0</div><div class="lbl">Quantum-safe</div></div>
+      <div class="stat"><div class="num" id="statTotal">0</div><div class="lbl">Total artefacts</div></div>
+    </div>
+    <div class="table-tools" id="filterChips">
+      <button class="filter-chip active" data-filter="all">ALL</button>
+      <button class="filter-chip" data-filter="algorithm">ALGORITHMS</button>
+      <button class="filter-chip" data-filter="key">KEYS</button>
+      <button class="filter-chip" data-filter="certificate">CERTIFICATES</button>
+      <button class="filter-chip" data-filter="library">LIBRARIES</button>
+      <button class="filter-chip" data-filter="protocol">PROTOCOLS</button>
+    </div>
+    <table>
+      <thead><tr><th data-sort="name">ARTEFACT</th><th data-sort="type">TYPE</th><th data-sort="risk">RISK</th><th data-sort="criticality">CRITICALITY</th></tr></thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </section>
+
+  <section class="pane">
+    <div class="pane-head"><h2>Quantum risk matrix</h2><span>criticality × vulnerability</span></div>
+    <canvas id="matrix" width="640" height="340"></canvas>
+    <div class="legend">
+      <span><i style="background:var(--brick)"></i>Migrate now</span>
+      <span><i style="background:var(--brass)"></i>Plan migration</span>
+      <span><i style="background:var(--sage)"></i>Monitor</span>
+    </div>
+    <div class="pane-head" style="margin-top:24px;"><h2>Recommended alternatives</h2><span>ranked by risk</span></div>
+    <div id="recList"></div>
+  </section>
+</main>
+
+<footer style="justify-content:flex-end;">
+  <button class="export-btn" id="exportBtn">Export report (CSV)</button>
+</footer>
+
+<div class="overlay" id="overlay"></div>
+<div class="drawer" id="drawer">
+  <button class="drawer-close" id="drawerClose">← CLOSE</button>
+  <div id="drawerContent"></div>
+</div>
+
+<script>
+const ARTEFACTS = [
+  {id:1, name:"RSA-2048", type:"algorithm", path:"src/auth/token_signer.py", risk:"risk", criticality:4, lifetime:"5 yrs", vuln:0.9, crit:0.9, rec:"Migrate to ML-DSA (Dilithium) for signing"},
+  {id:2, name:"ECDSA P-256", type:"algorithm", path:"src/auth/jwt_verify.go", risk:"risk", criticality:5, lifetime:"7 yrs", vuln:0.85, crit:0.95, rec:"Migrate to ML-DSA or hybrid ECDSA+Dilithium"},
+  {id:3, name:"AES-256-GCM", type:"algorithm", path:"src/crypto/cipher.rs", risk:"safe", criticality:5, lifetime:"10 yrs", vuln:0.15, crit:0.9, rec:"No action — symmetric, Grover-resistant at this keylength"},
+  {id:4, name:"TLS 1.2", type:"protocol", path:"config/nginx.conf", risk:"warn", criticality:5, lifetime:"3 yrs", vuln:0.55, crit:0.92, rec:"Upgrade to TLS 1.3 with hybrid PQC key exchange (X25519+Kyber)"},
+  {id:5, name:"OpenSSL 1.1.1", type:"library", path:"vendor/openssl", risk:"warn", criticality:4, lifetime:"2 yrs", vuln:0.6, crit:0.7, rec:"Upgrade to OpenSSL 3.x with OQS provider"},
+  {id:6, name:"RSA-4096 root CA cert", type:"certificate", path:"certs/root-ca.pem", risk:"risk", criticality:5, lifetime:"12 yrs", vuln:0.92, crit:0.98, rec:"Re-issue as hybrid X.509 (RSA+Dilithium) certificate chain"},
+  {id:7, name:"Diffie-Hellman (2048-bit)", type:"algorithm", path:"src/vpn/ike_negotiate.c", risk:"risk", criticality:3, lifetime:"6 yrs", vuln:0.88, crit:0.6, rec:"Migrate to Kyber (ML-KEM) key exchange"},
+  {id:8, name:"ChaCha20-Poly1305", type:"algorithm", path:"src/mobile/session.kt", risk:"safe", criticality:3, lifetime:"8 yrs", vuln:0.12, crit:0.55, rec:"No action — symmetric stream cipher, low quantum exposure"},
+  {id:9, name:"SHA-256", type:"algorithm", path:"src/ledger/hash_util.py", risk:"safe", criticality:4, lifetime:"10 yrs", vuln:0.2, crit:0.75, rec:"Monitor — Grover gives only quadratic speedup, keylength sufficient"},
+  {id:10, name:"HSM key vault (RSA)", type:"key", path:"infra/hsm/keyring.yaml", risk:"risk", criticality:5, lifetime:"15 yrs", vuln:0.9, crit:0.97, rec:"Provision hybrid PQC key material ahead of Mosca crossover"},
+  {id:11, name:"SSH host key (RSA-2048)", type:"key", path:"infra/ssh/host_key", risk:"risk", criticality:2, lifetime:"4 yrs", vuln:0.8, crit:0.4, rec:"Rotate to Ed25519 short-term, PQC-SSH when OpenSSH support matures"},
+  {id:12, name:"IPsec IKEv2", type:"protocol", path:"infra/vpn/ipsec.conf", risk:"warn", criticality:4, lifetime:"5 yrs", vuln:0.5, crit:0.68, rec:"Enable hybrid PQC key exchange draft extensions"},
+  {id:13, name:"bcrypt", type:"algorithm", path:"src/auth/password_hash.py", risk:"safe", criticality:3, lifetime:"n/a", vuln:0.05, crit:0.5, rec:"No action — not a quantum-relevant primitive"},
+  {id:14, name:"libsodium 1.0.18", type:"library", path:"vendor/libsodium", risk:"safe", criticality:3, lifetime:"3 yrs", vuln:0.25, crit:0.5, rec:"Track upstream PQC roadmap; no immediate action"},
+  {id:15, name:"Client TLS cert (ECDSA)", type:"certificate", path:"certs/client/service-a.pem", risk:"risk", criticality:3, lifetime:"2 yrs", vuln:0.78, crit:0.55, rec:"Short lifetime mitigates urgency; re-issue hybrid at next renewal"},
+  {id:16, name:"AWS KMS (RSA CMK)", type:"key", path:"infra/aws/kms.tf", risk:"risk", criticality:4, lifetime:"6 yrs", vuln:0.82, crit:0.8, rec:"Move to AWS KMS PQC-ready key spec when available; document exposure"},
+  {id:17, name:"Kerberos (RC4 legacy)", type:"protocol", path:"infra/ad/krb5.conf", risk:"risk", criticality:3, lifetime:"5 yrs", vuln:0.7, crit:0.6, rec:"Disable RC4 etype; enforce AES-only tickets, plan PQC extension"},
+  {id:18, name:"gRPC mTLS (ECDHE)", type:"protocol", path:"src/services/grpc_config.go", risk:"warn", criticality:4, lifetime:"4 yrs", vuln:0.55, crit:0.7, rec:"Adopt hybrid ECDHE+Kyber cipher suite when gRPC/BoringSSL support lands"},
+];
+const riskHex = {risk:'#8C4A3A', warn:'#B08D57', safe:'#6E8574'};
+let sortKey=null, sortDir=1, activeFilter='all';
+
+function renderStats(){
+  document.getElementById('statRisk').textContent = ARTEFACTS.filter(a=>a.risk==='risk').length;
+  document.getElementById('statWarn').textContent = ARTEFACTS.filter(a=>a.risk==='warn').length;
+  document.getElementById('statSafe').textContent = ARTEFACTS.filter(a=>a.risk==='safe').length;
+  document.getElementById('statTotal').textContent = ARTEFACTS.length;
+  document.getElementById('invCount').textContent = ARTEFACTS.length + ' artefacts';
+}
+function renderTable(){
+  let rows = activeFilter==='all' ? ARTEFACTS.slice() : ARTEFACTS.filter(a=>a.type===activeFilter);
+  if(sortKey){
+    rows.sort((a,b)=>{
+      let av = sortKey==='risk' ? a.vuln : sortKey==='criticality' ? a.criticality : a[sortKey];
+      let bv = sortKey==='risk' ? b.vuln : sortKey==='criticality' ? b.criticality : b[sortKey];
+      if(typeof av === 'string') return av.localeCompare(bv)*sortDir;
+      return (av-bv)*sortDir;
+    });
+  }
+  document.getElementById('tableBody').innerHTML = rows.map(a=>`
+    <tr data-id="${a.id}">
+      <td><div class="artefact-name">${a.name}</div><div class="artefact-path">${a.path}</div></td>
+      <td>${a.type}</td>
+      <td><span class="badge ${a.risk}">${a.risk==='risk'?'VULNERABLE':a.risk==='warn'?'AT RISK':'SAFE'}</span></td>
+      <td><div class="crit-bars">${[1,2,3,4,5].map(n=>`<span class="${n<=a.criticality?'on':''}"></span>`).join('')}</div></td>
+    </tr>`).join('');
+  document.querySelectorAll('#tableBody tr').forEach(tr=> tr.addEventListener('click', ()=> openDrawer(parseInt(tr.dataset.id))));
+}
+document.querySelectorAll('thead th').forEach(th=>{
+  th.addEventListener('click', ()=>{
+    const key = th.dataset.sort;
+    sortDir = (sortKey===key) ? -sortDir : 1;
+    sortKey = key;
+    renderTable();
+  });
+});
+document.querySelectorAll('.filter-chip').forEach(chip=>{
+  chip.addEventListener('click', ()=>{
+    document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    activeFilter = chip.dataset.filter;
+    renderTable();
+  });
+});
+
+function renderMatrix(){
+  const canvas = document.getElementById('matrix');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width;
+  const H = canvas.height;
+  const pad = 44;
+
+  ctx.clearRect(0, 0, W, H);
+
+  // -----------------------------
+  // Draw grid
+  // -----------------------------
+  ctx.strokeStyle = '#232529';
+  ctx.lineWidth = 1;
+
+  for (let i = 0; i <= 4; i++) {
+
+    const x =
+      pad + (W - 2 * pad) * i / 4;
+
+    const y =
+      pad + (H - 2 * pad) * i / 4;
+
+    ctx.beginPath();
+    ctx.moveTo(x, pad);
+    ctx.lineTo(x, H - pad);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(pad, y);
+    ctx.lineTo(W - pad, y);
+    ctx.stroke();
+  }
+
+  // -----------------------------
+  // Axis labels
+  // -----------------------------
+  ctx.fillStyle = '#84868C';
+  ctx.font = '10px IBM Plex Mono, monospace';
+
+  ctx.fillText(
+    'BUSINESS CRITICALITY →',
+    pad,
+    H - pad + 30
+  );
+
+  ctx.save();
+  ctx.translate(14, H - pad);
+  ctx.rotate(-Math.PI / 2);
+
+  ctx.fillText(
+    'QUANTUM VULNERABILITY →',
+    0,
+    0
+  );
+
+  ctx.restore();
+
+  // -----------------------------
+  // Track overlapping points
+  // -----------------------------
+  const positionCounts = {};
+
+  ARTEFACTS.forEach((a) => {
+
+    const key =
+      `${a.crit.toFixed(3)}_${a.vuln.toFixed(3)}`;
+
+    if (!positionCounts[key]) {
+      positionCounts[key] = 0;
+    }
+
+    const positionIndex =
+      positionCounts[key];
+
+    positionCounts[key]++;
+
+    // -----------------------------
+    // Base position
+    // -----------------------------
+    let x =
+      pad +
+      (W - 2 * pad) * a.crit;
+
+    let y =
+      (H - pad) -
+      (H - 2 * pad) * a.vuln;
+
+    // -----------------------------
+    // Spread overlapping points
+    // -----------------------------
+  // Spread overlapping points horizontally
+const totalAtPosition =
+  ARTEFACTS.filter(other =>
+    other.crit.toFixed(3) === a.crit.toFixed(3) &&
+    other.vuln.toFixed(3) === a.vuln.toFixed(3)
+  ).length;
+
+if (totalAtPosition > 1) {
+
+  const spacing = 12;
+
+  const offset =
+    (positionIndex -
+      (totalAtPosition - 1) / 2) *
+    spacing;
+
+  x += offset;
+}
+
+    // Keep point inside graph
+    x = Math.max(
+      pad + 7,
+      Math.min(W - pad - 7, x)
+    );
+
+    y = Math.max(
+      pad + 7,
+      Math.min(H - pad - 7, y)
+    );
+
+    // -----------------------------
+    // Draw point
+    // -----------------------------
+    ctx.beginPath();
+
+    ctx.arc(
+      x,
+      y,
+      6,
+      0,
+      Math.PI * 2
+    );
+
+    ctx.fillStyle =
+      riskHex[a.risk] || '#84868C';
+
+    ctx.globalAlpha = 0.85;
+
+    ctx.fill();
+
+    ctx.globalAlpha = 1;
+  });
+}
+
+function renderRecs(){
+  const top = ARTEFACTS.filter(a=>a.risk!=='safe').sort((a,b)=>(b.vuln*b.crit)-(a.vuln*a.crit)).slice(0,5);
+  document.getElementById('recList').innerHTML = top.map(a=>`
+    <div class="rec-item">
+      <div class="rec-top"><span class="rec-name">${a.name}</span><span class="badge ${a.risk}">${a.risk==='risk'?'URGENT':'PLAN'}</span></div>
+      <div class="rec-detail"><span class="arrow">→</span> ${a.rec}</div>
+    </div>`).join('');
+}
+function moscaPosition(a){ return Math.min(96, Math.round(a.vuln*70 + a.crit*30)); }
+function openDrawer(id){
+  const a = ARTEFACTS.find(x=>x.id===id);
+  const pos = moscaPosition(a);
+  document.getElementById('drawerContent').innerHTML = `
+    <h3>${a.name}</h3><div class="sub">${a.path}</div>
+    <div class="drawer-section"><h4>ARTEFACT DETAILS</h4>
+      <div class="kv"><span>Type</span><span>${a.type}</span></div>
+      <div class="kv"><span>Data lifetime</span><span>${a.lifetime}</span></div>
+      <div class="kv"><span>Business criticality</span><span>${a.criticality}/5</span></div>
+      <div class="kv"><span>Vulnerability score</span><span>${(a.vuln*100).toFixed(0)}%</span></div>
+      <div class="kv"><span>Classification</span><span>${a.risk==='risk'?'Migrate now':a.risk==='warn'?'Plan migration':'Monitor'}</span></div>
+    </div>
+    <div class="drawer-section"><h4>MOSCA'S THEOREM — RISK WINDOW</h4>
+      <div class="mosca-bar"><div class="mosca-fill" style="width:${pos}%; background:${riskHex[a.risk]}"></div><div class="mosca-marker" style="left:${pos}%"></div></div>
+      <div class="kv" style="border:none; margin-top:8px;"><span>x + y &gt; z threshold</span><span>${pos>=70?'EXCEEDED':pos>=45?'APPROACHING':'WITHIN BOUNDS'}</span></div>
+    </div>
+    <div class="drawer-section"><h4>RECOMMENDED ALTERNATIVE</h4>
+      <div class="rec-detail" style="font-size:12px; line-height:1.6;"><span class="arrow">→</span> ${a.rec}</div>
+    </div>`;
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('drawer').classList.add('open');
+}
+document.getElementById('drawerClose').addEventListener('click', closeDrawer);
+document.getElementById('overlay').addEventListener('click', closeDrawer);
+function closeDrawer(){ document.getElementById('overlay').classList.remove('open'); document.getElementById('drawer').classList.remove('open'); }
+
+const scanSteps = ["Parsing source tree…","Scanning for cryptographic call sites…","Extracting algorithms, keys and certificates…","Cross-referencing NIST PQC risk database…","Applying Mosca's theorem to each artefact…","Ranking migration priority…","Scan complete."];
+document.getElementById('scanBtn').addEventListener('click', async () => {
+    const btn = document.getElementById('scanBtn');
+    const line = document.getElementById('scanLine');
+    const fill = document.getElementById('scanFill');
+
+    btn.disabled = true;
+    fill.style.width = '0%';
+
+    try {
+        // Local project folder to scan
+        const directoryPath = prompt(
+            'Enter the full local project folder path to scan:',
+            'C:\\Users\\prana\\OneDrive\\Desktop\\crypto-test'
+        );
+
+        if (!directoryPath) {
+            btn.disabled = false;
+            return;
+        }
+
+        // -----------------------------
+        // STEP 1: Backend 1
+        // Source-code → CycloneDX CBOM
+        // -----------------------------
+        line.textContent = 'Scanning source code...';
+        fill.style.width = '25%';
+
+        const scannerResponse = await fetch(
+    `http://localhost:8080/api/v1/scan?directoryPath=${encodeURIComponent(directoryPath)}`,
+    {
+        method: 'POST'
+    }
+);
+        if (!scannerResponse.ok) {
+            throw new Error(
+                `Backend 1 scan failed: ${scannerResponse.status}`
+            );
+        }
+
+        const cbom = await scannerResponse.json();
+
+        // -----------------------------
+        // STEP 2: Backend 2
+        // CBOM → PQC risk analysis
+        // -----------------------------
+        line.textContent = 'Analyzing post-quantum cryptographic risk...';
+        fill.style.width = '55%';
+
+        const riskResponse = await fetch(
+            'http://localhost:5000/api/scans',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-API-Key': 'ecdat-dev-key-change-me'
+                },
+                body: JSON.stringify({
+                    cbom: cbom,
+                    years_to_crqc: 12.0
+                })
+            }
+        );
+
+        if (!riskResponse.ok) {
+            const errorText = await riskResponse.text();
+            throw new Error(
+                `Backend 2 risk analysis failed: ${riskResponse.status} ${errorText}`
+            );
+        }
+
+        const report = await riskResponse.json();
+        window.latestReport = report;
+        console.log("BACKEND 2 REPORT:", report);
+
+        // -----------------------------
+        // STEP 3: Convert real results
+        // into dashboard artefacts
+        // -----------------------------
+        line.textContent = 'Updating risk dashboard...';
+        fill.style.width = '80%';
+
+        const realArtefacts =
+            report.artefacts ||
+            report.artifacts ||
+            report.results ||
+            report.risks ||
+            [];
+
+        ARTEFACTS.length = 0;
+
+        realArtefacts.forEach((item, index) => {
+
+    const cbomItem = report.cbom?.[index] || {};
+    const recommendationItem = report.recommendations?.[index] || {};
+
+    const riskValue =
+        item.risk_tier ||
+        item.risk ||
+        item.classification ||
+        'Safe';
+
+    let risk = String(riskValue).toLowerCase();
+
+    if (
+        risk.includes('critical') ||
+        risk.includes('high') ||
+        risk.includes('shor_breakable') ||
+        risk.includes('vulnerable')
+    ) {
+        risk = 'risk';
+    } else if (
+        risk.includes('medium') ||
+        risk.includes('warn') ||
+        risk.includes('at_risk')
+    ) {
+        risk = 'warn';
+    } else {
+        risk = 'safe';
+    }
+
+    const cryptoProperties =
+        cbomItem.cryptoProperties || {};
+
+    const algorithmProperties =
+        cryptoProperties.algorithmProperties || {};
+
+    const properties =
+        Array.isArray(cbomItem.properties)
+            ? cbomItem.properties
+            : [];
+
+    const propertyMap = {};
+
+    properties.forEach(property => {
+        if (property?.name) {
+            propertyMap[property.name] = property.value;
+        }
+    });
+    
+
+    ARTEFACTS.push({
+        id: index + 1,
+
+        name:
+            cbomItem.name ||
+            item.algorithm ||
+            `Crypto Asset ${index + 1}`,
+
+        type:
+            cbomItem.type === 'library'
+                ? 'library'
+                : 'algorithm',
+
+        path:
+            propertyMap.filePath ||
+            item.location ||
+            'unknown',
+
+        risk: risk,
+
+        criticality:
+            item.criticality ||
+            item.priority ||
+            'medium',
+
+        lifetime:
+            item.lifetime ||
+            report.years_to_crqc_assumption ||
+            12,
+
+        recommendation:
+            recommendationItem.recommendation ||
+            recommendationItem.action ||
+            recommendationItem.description ||
+            'Review migration requirements.',
+
+          algorithm:
+      algorithmProperties.algorithm ||
+      item.algorithm ||
+      cbomItem.name ||
+      'Unknown',
+
+  key_length:
+      item.key_length ||
+      algorithmProperties.parameterSetIdentifier ||
+      null,
+
+  crit:
+    Math.min(
+        1,
+        Math.max(
+            0,
+            (Number(item.criticality) || 3) / 5
+        )
+    ),
+
+  vuln:
+    (() => {
+        const classification =
+            String(
+                report.classifications?.[index]?.vulnerability_tier ||
+                ''
+            ).toLowerCase();
+
+        if (classification === 'shor_breakable') {
+            return 1.0;
+        }
+
+        if (
+            classification.includes('weak') ||
+            classification.includes('medium')
+        ) {
+            return 0.6;
+        }
+
+        if (
+            classification.includes('quantum_safe') ||
+            classification.includes('safe')
+        ) {
+            return 0.1;
+        }
+
+        return 0.3;
+    })(),
+
+  rec:
+      recommendationItem.recommendation ||
+      recommendationItem.action ||
+      recommendationItem.description ||
+      'Review migration requirements.'
+    });
+});
+
+        // -----------------------------
+        // STEP 4: Refresh dashboard
+        // -----------------------------
+        renderStats();
+        renderTable();
+        renderMatrix();
+
+        fill.style.width = '100%';
+        line.textContent = 'Scan complete.';
+
+        setTimeout(() => {
+            btn.disabled = false;
+        }, 500);
+
+        console.log('CBOM:', cbom);
+        console.log('Risk Report:', report);
+
+    } catch (error) {
+
+        console.error(error);
+
+        line.textContent = 'Scan failed.';
+        fill.style.width = '0%';
+
+        alert(
+            'Scan failed.\\n\\n' +
+            error.message +
+            '\\n\\nMake sure Backend 1 (8080) and Backend 2 (5000) are running.'
+        );
+
+        btn.disabled = false;
+    }
+});
+document.getElementById('exportBtn').addEventListener('click', ()=>{
+  const header = ['Name','Type','Path','Risk','Criticality','Lifetime','Recommendation'];
+  const rows = ARTEFACTS.map(a=>[a.name,a.type,a.path,a.risk,a.criticality,a.lifetime,a.rec]);
+  const csv = [header,...rows].map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url; link.download = 'ecdat_cbom_report.csv'; link.click();
+  URL.revokeObjectURL(url);
+});
+
+renderStats(); renderTable(); renderMatrix(); renderRecs();
+</script>
+</body>
+</html>
